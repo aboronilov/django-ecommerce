@@ -18,10 +18,17 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField()
     digital = models.BooleanField(default=False, blank=True, null=False)
-    # image
+    image = models.ImageField(blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+        if self.image:
+            return self.image.url
+        else:
+            return ''
 
 
 class Order(models.Model):
