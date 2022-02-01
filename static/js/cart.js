@@ -21,7 +21,10 @@ function updateUserOrder(productId, action){
     console.log('User is authenticated. Sending data...')
 
     const url = '/update_item/'
-    const headers = {'Content-Type': 'application/json'}
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+    }
     const body = JSON.stringify({
         'productId': productId,
         'action': action,
