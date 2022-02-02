@@ -31,7 +31,7 @@
                         <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                        <input class="form-control" type="text" name="country" placeholder="Country..">
                     </div>
                 </div>
 
@@ -71,6 +71,7 @@
 <script type="text/javascript">
     'use strict'
     const shipping = '{{order.shipping}}'
+    const total = '{{order.get_cart_total|floatformat:2}}'
 
     if (shipping === 'False') {
         document.getElementById('shipping-info').innerHTML = ''
@@ -100,6 +101,33 @@
 
     function submitFormData() {
         console.log('Payment button clicked')
+
+        const userFormData = {
+            'name': null,
+            'email': null,
+            'total': total,
+        }
+
+        const shippingInfo = {
+            'address': null,
+            'city': null,
+            'state': null,
+            'zipcode': null,
+            'country': null,
+        }
+
+        if (shipping != 'False') {
+            shippingInfo.address = form.address.value
+            shippingInfo.city = form.city.value
+            shippingInfo.state = form.state.value
+            shippingInfo.zipcode = form.zipcode.value
+            shippingInfo.country = form.country.value
+        }
+
+        if (user === 'AnonymousUser') {
+            userFormData.name = form.name.value
+            userFormData.email = form.email.value
+        }
     }
 
 </script>
