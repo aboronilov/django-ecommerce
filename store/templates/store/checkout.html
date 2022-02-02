@@ -71,9 +71,9 @@
 <script type="text/javascript">
     'use strict'
     const shipping = '{{order.shipping}}'
-    const total = '{{order.get_cart_total|floatformat:2}}'
+    const total = '{{order.get_cart_total}}'
 
-    if (shipping === 'False') {
+    if (shipping == 'False') {
         document.getElementById('shipping-info').innerHTML = ''
     }
 
@@ -81,7 +81,7 @@
         document.getElementById('user-info').innerHTML = ''
     }
 
-    if (user != 'AnonymousUser' && shipping === 'False') {
+    if (shipping == 'False' && user != 'AnonymousUser') {
         document.getElementById('form-wrapper').classList.add('hidden')
         document.getElementById('payment-info').classList.remove('hidden')
     }
@@ -128,6 +128,29 @@
             userFormData.name = form.name.value
             userFormData.email = form.email.value
         }
+
+        const url = '/process_order/'
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        }
+        const body = JSON.stringify({
+            'form': userFormData,
+            'shipping': shippingInfo,
+        })
+
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: body,
+        })
+
+        .then((response) => response.json())
+        .then((data)=>{
+            console.log('Success', data)
+            alert('Transaction complete')
+            window.location.href = "{% url 'store' %}"
+        })
     }
 
 </script>

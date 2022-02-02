@@ -88,5 +88,3 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.address
 
-# root
-# 123456
