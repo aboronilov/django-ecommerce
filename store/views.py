@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 
 from store.models import Product, Order, OrderItem, ShippingAddress
 
@@ -88,6 +89,7 @@ def updateItem(request):
     return JsonResponse('Item is added', safe=False)
 
 
+# @csrf_exempt
 def processOrder(request):
     transaction_id = now()
     data = json.loads(request.body)
