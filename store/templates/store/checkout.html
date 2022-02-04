@@ -44,7 +44,7 @@
         <div class="box-element hidden" id="payment-info">
             <small>PayPal options</small>
             <div id="paypal-button-container"></div>
-<!--            <button class="btn btn-outline-dark" id="make-payment">Make Payment</button>-->
+            <!--            <button class="btn btn-outline-dark" id="make-payment">Make Payment</button>-->
         </div>
     </div>
     <div class="col-lg-6">
@@ -70,11 +70,16 @@
     </div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AXRNfaFsBkeW17Yyceq6hwdgDJbwmCoETphoEIGvg5tKF_nZ0CM60lr1L7H4-Hbg126vHOE6RFLSHc1B&currency=USD&disable-funding=credit"></script>
 
-    <script>
+<script>
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
+
+            style: {
+                color: 'blue',
+                shape: 'rect',
+            },
 
             // Set up the transaction
             createOrder: function(data, actions) {
@@ -106,7 +111,10 @@
 
         }).render('#paypal-button-container');
 
-    </script>
+
+
+
+</script>
 
 <script type="text/javascript">
     'use strict'
@@ -196,6 +204,9 @@
             window.location.href = "{% url 'store' %}"
         })
     }
+
+
+
 
 </script>
 {% endblock content %}
