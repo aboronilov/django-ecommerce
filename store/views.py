@@ -1,9 +1,15 @@
 import json
 
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import CreateView
+
+from .forms import RegisterUserForm, LoginUserForm
 from .utils import cookieCart, cardData, guestOrder
 
 from store.models import Product, Order, OrderItem, ShippingAddress, Customer
@@ -103,3 +109,27 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode']
         )
     return JsonResponse('Payment complete', safe=False)
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'store/register.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('store')
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'store/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('store')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')

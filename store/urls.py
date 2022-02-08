@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import store, cart, checkout, updateItem, processOrder
+from .views import store, cart, checkout, updateItem, processOrder, RegisterUser, LoginUser, logout_user
 
 urlpatterns = [
     path('', store, name='store'),
     path('cart/', cart, name='cart'),
     path('checkout/', checkout, name='checkout'),
-
+    path('register/', RegisterUser.as_view(), name='register'),
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', logout_user, name='logout'),
     path('update_item/', updateItem, name='update_item'),
     path('process_order/', processOrder, name='process_order'),
 
